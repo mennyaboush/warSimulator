@@ -21,8 +21,8 @@ public class Test extends Application{
 		for(int row = 0 ; row < SIZE_OF_MAP ; row++) {
 			for(int col = 0 ; col < SIZE_OF_MAP ;col++) {
 				Label l = new Label();
-				l.setMinHeight(20);
-				l.setMinWidth(20);
+				l.setMinHeight(30);
+				l.setMinWidth(30);
 				if(row < 3 || row > 16)
 					l.setId("label-sea");
 				else if(row < 8 || row > 11)
