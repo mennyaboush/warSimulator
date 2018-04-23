@@ -17,4 +17,9 @@ public class RocketLauncher extends abstractLauncher implements launcherable{
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public void addMissle() {
+		// TODO Auto-generated method stub
+		
+	}
 }
