@@ -8,7 +8,7 @@ import java.util.logging.SimpleFormatter;
 
 public abstract class AbstractLauncher implements launcherable{
 	private String id;
-	private ArrayList<Missile> missileArr = new ArrayList<>();
+	protected ArrayList<Missile> missileArr = new ArrayList<>();
 	private boolean isHidden;
 	private Area area;
 	Location location;
