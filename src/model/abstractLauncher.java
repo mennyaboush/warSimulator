@@ -16,7 +16,7 @@ public abstract class abstractLauncher implements launcherable{
 		try {
 			FileHandler handler = new FileHandler(getFileName(),true);
 			l.addHandler(handler);
-			handler.setFormatter(new SimpleFormatter());//time = dd/MM/yyyy HH:mm:ss
+			handler.setFormatter(new SimpleFormatter());
 		} catch (SecurityException | IOException e) {
 			e.printStackTrace();
 		}
