@@ -1,3 +1,4 @@
+package view;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -8,8 +9,11 @@ import javafx.stage.Stage;
 import model.RocketLauncher;
 
 
-public class Map extends Application{
+public class WarView extends Application{
 
+	public static int MIN_COORD = 0;
+	public static int MAX_COORD = 19;
+	
 	public static void main(String[] args) {
 		launch(args);
 //		RocketLauncher r = new RocketLauncher(10, coordinateX, coordinateY, hiddenLauncher)
@@ -37,7 +41,7 @@ public class Map extends Application{
 		}
 
 		Scene scene = new Scene(gridPane);
-		scene.getStylesheets().add(Map.class
+		scene.getStylesheets().add(WarView.class
 				.getResource("warMap.css").toExternalForm());
 
 		primaryStage.setScene(scene);

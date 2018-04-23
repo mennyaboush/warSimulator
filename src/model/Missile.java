@@ -1,20 +1,39 @@
 package model;
 
 import java.io.IOException;
+import java.util.Random;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import view.WarView;
+
+
 public class Missile extends Thread{
+	
+	public static int ID = 1;
+	
 	public static Logger logger;
 	private String id;
-	private String destination;
+	private Location destination;
 	private int launchTime;
 	private int flyTime;
 	private int demage;
 	private boolean launched;
 
-	public Missile(String id,String destination, int launchTime,int flyTime,int demage,String logFileName) {
+	public Missile() {
+		super();
+		Random r = new Random();
+		this.id = makeId();
+		launchTime = r.nextInt(2);
+		flyTime = r.nextInt(WarView.MAX_COORD);
+		demage = r.nextInt(3000);
+		launched = false;
+	}
+	private String makeId() {
+		return "M"+ID++;
+	}
+	public Missile(String id,Location destination, int launchTime,int flyTime,int demage,String logFileName) {
 		super();
 		this.id = id;
 		this.destination = destination;
@@ -23,8 +42,6 @@ public class Missile extends Thread{
 		this.demage = demage;
 		this.launched = false; //missle hasnt launched yet.	
 		initiateLogger(logFileName);
-		
-		
 	}
 	
 	
@@ -58,7 +75,7 @@ private void initiateLogger(String logFileName) {
 	private void launchMissle() {	
 	this.launched = true;
 	fireMissle();
-	logger.log(Level.INFO,"Missle id: "+id+" has hit "+destination);
+	//logger.log(Level.INFO,"Missle id: "+id+" has hit "+destination);
 	System.out.println("Missle id: "+id+" has hit "+destination);
 	}
 
@@ -84,14 +101,14 @@ private void initiateLogger(String logFileName) {
 
 
 
-	public String getDestination() {
+	public Location getDestination() {
 		return destination;
 	}
 
 
 
 
-	public void setDestination(String destination) {
+	public void setDestination(Location destination) {
 		this.destination = destination;
 	}
 

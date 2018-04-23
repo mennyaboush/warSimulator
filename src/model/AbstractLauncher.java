@@ -6,13 +6,12 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-public abstract class abstractLauncher implements launcherable{
+public abstract class AbstractLauncher implements launcherable{
 	private String id;
-	private ArrayList<Missile> missiles = new ArrayList<>();
+	private ArrayList<Missile> missileArr = new ArrayList<>();
 	private boolean isHidden;
 	private Area area;
-	private int coordinateX;
-	private int coordinateY;
+	Location location;
 	
 	public void addFileHandler(Logger l) {
 		try {
@@ -41,18 +40,7 @@ public abstract class abstractLauncher implements launcherable{
 	public void setArea(Area area) {
 		this.area = area;
 	}
-	public int getCoordinateX() {
-		return coordinateX;
-	}
-	public void setCoordinateX(int coordinateX) {
-		this.coordinateX = coordinateX;
-	}
-	public int getCoordinateY() {
-		return coordinateY;
-	}
-	public void setCoordinateY(int coordinateY) {
-		this.coordinateY = coordinateY;
-	}
+
 	public String getId() {
 		return id;
 	}
@@ -68,6 +56,8 @@ public abstract class abstractLauncher implements launcherable{
 		this.isHidden = isHidden;
 	} 
 	
+	/**/
+	//public abstract boolean checkLocation ();
 	
 
 }

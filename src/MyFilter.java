@@ -3,7 +3,7 @@ import java.lang.reflect.Method;
 import java.util.logging.Filter;
 import java.util.logging.LogRecord;
 
-import model.abstractLauncher;
+import model.AbstractLauncher;
 
 public class MyFilter implements Filter{
 
@@ -12,7 +12,7 @@ public class MyFilter implements Filter{
 		Object o = new Object();
 		Method func;
 		try {
-			func = o.getClass().getMethod(((abstractLauncher)o).getFileName(), new Class[]{});
+			func = o.getClass().getMethod(((AbstractLauncher)o).getFileName(), new Class[]{});
 				String fileName = (String) func.invoke(o);
 			
 		} catch (NoSuchMethodException|SecurityException |

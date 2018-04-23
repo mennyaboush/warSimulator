@@ -1,20 +1,22 @@
 package model;
 
-public class RocketLauncher extends abstractLauncher implements launcherable{
+public class RocketLauncher extends AbstractLauncher implements launcherable{
 
 	
-	public RocketLauncher(String id , int coordinateX ,int coordinateY , boolean hiddenLauncher) {
+	public RocketLauncher(String id , Location location, boolean hiddenLauncher) {
 		setId(id);
-		setCoordinateX(coordinateX);
-		setCoordinateY(coordinateY);
+		this.location = location;
 		if(hiddenLauncher)
 			getHiding();
 		else
 			getUnhiding();
 	}
 	@Override
-	public void fire(int coordinateX, int coordinateY) {
-		// TODO Auto-generated method stub
+	public void fire(Location location) {
+		if(missileArr.isEmpty())
+			missileArr.add(new Missile());
+		Missile m = missileArr.remove(0);
+		m.setDestination(location);
 		
 	}
 	@Override
