@@ -1,12 +1,14 @@
 package model;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 public abstract class abstractLauncher implements launcherable{
 	private String id;
+	private ArrayList<Missile> missiles = new ArrayList<>();
 	private boolean isHidden;
 	private Area area;
 	private int coordinateX;
@@ -16,7 +18,7 @@ public abstract class abstractLauncher implements launcherable{
 		try {
 			FileHandler handler = new FileHandler(getFileName(),true);
 			l.addHandler(handler);
-			handler.setFormatter(new SimpleFormatter());//time = dd/MM/yyyy HH:mm:ss
+			handler.setFormatter(new SimpleFormatter());
 		} catch (SecurityException | IOException e) {
 			e.printStackTrace();
 		}
