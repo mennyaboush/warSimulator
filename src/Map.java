@@ -5,13 +5,14 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import model.RocketLauncher;
 
 
-public class Test extends Application{
+public class Map extends Application{
 
 	public static void main(String[] args) {
 		launch(args);
-
+//		RocketLauncher r = new RocketLauncher(10, coordinateX, coordinateY, hiddenLauncher)
 	}
 
 	@Override
@@ -36,7 +37,7 @@ public class Test extends Application{
 		}
 
 		Scene scene = new Scene(gridPane);
-		scene.getStylesheets().add(Test.class
+		scene.getStylesheets().add(Map.class
 				.getResource("warMap.css").toExternalForm());
 
 		primaryStage.setScene(scene);
