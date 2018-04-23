@@ -1,5 +1,5 @@
 package model;
 
 public enum Area {
-	SAND,FOREST,SEA 
+	SAND,FOREST,SEA,AmitayTest 
 }
