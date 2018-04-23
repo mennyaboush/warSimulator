@@ -1,6 +1,5 @@
 package model;
 
-<<<<<<< HEAD
 import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -152,15 +151,4 @@ private void initiateLogger(String logFileName) {
 		this.launched = launched;
 	}
 	
-=======
-public class Missile implements Runnable{
-	private String id;
-
-	
-	@Override
-	public void run() {
-		
-		
-	}
->>>>>>> branch 'master' of https://github.com/mennyaboush/warSimulator.git
 }
