@@ -10,7 +10,6 @@ public abstract class AbstractLauncher implements launcherable{
 	private String id;
 	protected ArrayList<Missile> missileArr = new ArrayList<>();
 	private boolean isHidden;
-	private Area area;
 	Location location;
 	
 	public void addFileHandler(Logger l) {
@@ -34,13 +33,6 @@ public abstract class AbstractLauncher implements launcherable{
 		setHidden(false);
 	}
 	
-	public Area getArea() {
-		return area;
-	}
-	public void setArea(Area area) {
-		this.area = area;
-	}
-
 	public String getId() {
 		return id;
 	}

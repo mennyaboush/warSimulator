@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import model.RocketLauncher;
+import model.Launcher;
 
 
 public class WarView extends Application{
