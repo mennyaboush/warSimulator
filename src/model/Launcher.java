@@ -1,28 +1,26 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
-public class Launcher extends AbstractLauncher implements launcherable {
+import Enum.City;
+
+public class Launcher extends AbstractLauncher {
 	
-	public static int id = 1;
-	
+
 	// Test : no space in the city(the city is full)
-	public Launcher(String id, City gaza, boolean hiddenLauncher) {
-		setId(id);
-		this.location = new Location(gaza);
-		if (hiddenLauncher)
-			getHiding();
-		else
-			getUnhiding();
+	public Launcher(String id, City gaza, boolean hiddenLauncher, List<Missile> missiles) {
+		super(id,missiles,gaza,hiddenLauncher);
 	}
 
 
 	@Override
 	public void fire(Location location) {
-		if (missileArr.isEmpty())
-			missileArr.add(new Missile());
-		Missile m = missileArr.remove(0);
-		m.setDestination(location);
+		if (getMissileArr().isEmpty())
+			getMissileArr().add(new Missile());
+		//Missile m = getMissileArr().remove(0);
+		//m.setDestination(location);
 
 	}
 

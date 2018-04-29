@@ -2,16 +2,17 @@ package warInterface;
 
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 
+import Enum.DistractorType;
 import model.Location;
-import model.DistractorType;
 import model.Missile;
 public interface IWarController {
 	
-	boolean addLauncher(String id , boolean isHidden , Queue<Missile>missels);
-	boolean addMissleDistractor(String id,ArrayList <String> targetId ,Queue<Missile>missels);
-	boolean addLauncherDistractor(String id,DistractorType type,int distructTime);
+	void addLauncher(String id , boolean isHidden , List<Missile>missels);
+	void addMissleDistractor(String id, List<Missile>missels);
+	void addLauncherDistractor(String id,DistractorType type);
 	void launcherFire(Location target , int  damage , int flyTime  );
 	void launcherDistractorFire(String targetID , int flyTime  );
 	void missleDistractorFire();

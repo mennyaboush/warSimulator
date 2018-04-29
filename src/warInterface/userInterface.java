@@ -2,7 +2,7 @@ package warInterface;
 
 import java.util.Queue;
 
-import model.DistractorType;
+import Enum.DistractorType;
 import model.Location;
 import model.Missile;
 

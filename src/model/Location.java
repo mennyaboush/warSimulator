@@ -2,6 +2,7 @@ package model;
 
 import java.util.Random;
 
+import Enum.City;
 import view.WarView;
 
 public class Location {

@@ -6,11 +6,11 @@ import java.util.Queue;
 import java.util.Random;
 import java.util.Scanner;
 
-import model.DistractorType;
-import model.Location;
-import model.Missile;
+import Enum.City;
+import Enum.DistractorType;
 import warInterface.IWarController;
 import model.*;
+import sun.launcher.resources.launcher;
 
 public class WarController implements IWarController {
 	private List<launcherable> launchers = new ArrayList<>();
@@ -26,10 +26,13 @@ public class WarController implements IWarController {
 				addLauncher();
 				break;
 			case 2:
-				addMissleDistractor();
+				System.out.println("Enter city for adding MissleDistractor ");
+				printCitys();
+				int cityIndex = s.nextInt();
+				addMissleDistractor(City.values()[cityIndex]);
 				break;
 			case 3:
-				addLauncher(id, isHidden, missels)
+				addLauncherDistractor();
 				break;
 			case 4:
 				addLauncher(id, isHidden, missels)
@@ -50,18 +53,22 @@ public class WarController implements IWarController {
 		}
 	}
 
-	private void addMissleDistractor(City city) {
-		Random r = new Random();
-		String id = "D" + MissileDestructors.id++;
-
-		addMissleDistractor(id, null, null);
-
+	private void addLauncherDistractor() {
+		DistractorType t = EnterType();
+		addLauncherDistractor(makeLauncherDistractorId(), t);
 	}
 
-	private void addLauncher() {
-		Random r = new Random();
-		String id = "L" + Launcher.id++;
-		addLauncher(id, r.nextBoolean(), null);
+	private String makeLauncherDistractorId() {
+		return "D" + Launcher.numberId++;
+	}
+
+	private DistractorType EnterType() {// PLANE ,SHIP
+		System.out.println("press 1 - for PLANE ");
+		System.out.println("press 2 - for SHIP ");
+		int p = s.nextInt();
+		if (p == 1)
+			return DistractorType.PLANE;
+		return DistractorType.SHIP;
 	}
 
 	private void printMenu() {
@@ -76,17 +83,69 @@ public class WarController implements IWarController {
 
 	}
 
+	private void printCitys() {
+		System.out.println("Select a number representing the desired city");
+		for (City c : City.values()) {
+			System.out.println(c.ordinal() + "-" + c.name());
+		}
+
+	}
+
+	private void addMissleDistractor(City city) {
+		String id = "D" + MissileDestructors.numberId++;
+		List l = creatMissiles();
+		addMissleDistractor(id, l);
+
+	}
+
+	private List creatMissiles() {
+		List<Missile> l = new ArrayList();
+		MyRandom r = new MyRandom();
+		System.out.println("Enter target for missle:");
+		String target = s.nextLine();
+		City flag = checkLocation(target);
+		while (flag != null) {
+			l.add(new Missile(Missile.makeId(), new Location(flag), 
+					EnterLaunchTime(), r.flyingTime(), r.getDemage()));
+			System.out.println("Enter target for missle:");
+			 target = s.nextLine();
+			 flag = checkLocation(target);
+		}
+		return l;
+	}
+
+	private int EnterLaunchTime() {
+		System.out.println("Enter launch time:");
+		return s.nextInt();
+	}
+
+	private City checkLocation(String target) {
+
+		for (City c : City.values()) {
+			if (c.name().equals(target)) {
+				return c;
+			}
+		}
+		return null;
+	}
+
+	private void addLauncher() {
+		MyRandom r = new MyRandom();
+		String id = "L" + Launcher.numberId++;
+		List <Missile> l = creatMissiles();
+		addLauncher(id, r.isHidden(), l);
+	}
+
+	/** the Queue<Missile> missiles didn't use */
 	@Override
-	public boolean addLauncher(String id, boolean isHidden, Queue<Missile> missels) {
-		Launcher l = new Launcher("R" + Launcher.id++, City.GAZA, isHidden);
-		launchers.add(l);// need to add launchers in view
-		return true;
+	public void addLauncher(String id, boolean isHidden, List <Missile> missiles) {
+		Launcher l = new Launcher(id, City.GAZA, isHidden , missiles);
+		launchers.add(l);
 	}
 
 	@Override
-	public boolean addLauncherDistractor(String id, DistractorType type, int distructTime) {
-		// TODO Auto-generated method stub
-		return false;
+	public void addLauncherDistractor(String id, DistractorType type) {
+		System.out.println("");
 	}
 
 	@Override
@@ -120,18 +179,9 @@ public class WarController implements IWarController {
 	}
 
 	@Override
-	public boolean addMissleDistractor(String id, ArrayList<String> targetId, Queue<Missile> missiles) {
-		MissileDestructors md;
-		if (targetId == null)
-			if (missels == null)
-				md = new MissileDestructors(id);
-			else
-				md = new MissileDestructors(id, targetId);
-		else
-			md = new MissileDestructors(id, targetId , missiles);
-
+	public void addMissleDistractor(String id, List<Missile> missiles) {
+		MissileDestructors md = new MissileDestructors(id, missiles,MyRandom.getCity());
 		launchers.add(md);
-		return false;
 	}
 
 }

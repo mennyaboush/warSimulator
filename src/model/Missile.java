@@ -30,10 +30,10 @@ public class Missile extends Thread{
 		demage = r.nextInt(3000);
 		launched = false;
 	}
-	private String makeId() {
+	public static String makeId() {
 		return "M"+ID++;
 	}
-	public Missile(String id,Location destination, int launchTime,int flyTime,int demage,String logFileName) {
+	public Missile(String id,Location destination, int launchTime,int flyTime,int demage) {
 		super();
 		this.id = id;
 		this.destination = destination;
@@ -41,7 +41,7 @@ public class Missile extends Thread{
 		this.flyTime = flyTime;
 		this.demage = demage;
 		this.launched = false; //missle hasnt launched yet.	
-		initiateLogger(logFileName);
+		initiateLogger(id);
 	}
 	
 	

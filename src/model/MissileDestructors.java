@@ -4,20 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MissileDestructors extends AbstractLauncher {
-	public static int id = 1;
-	private HashMap<String, Integer> targetId = new HashMap<>();//key = tagetIndex value = time 
-	
-	public MissileDestructors(String id) {
-		super();
-		setId(id);
-	}
+import Enum.City;
 
-	public MissileDestructors(String id, ArrayList<String> targetId) {
-		this(id);
-		for (String string : targetId) {
-			
-		}
+public class MissileDestructors extends AbstractLauncher {
+	
+
+	public MissileDestructors(String id, List<Missile> missile,City city) {
+		super(id,missile,city , false);
 	}
 
 	@Override
