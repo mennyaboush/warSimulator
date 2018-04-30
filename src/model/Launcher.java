@@ -38,13 +38,21 @@ public class Launcher extends AbstractLauncher {
 
 	@Override
 	public synchronized void run() {
-		
+		war.getActiveLauncher().add(this);
+		boolean hit;
 		System.out.println("missile "+missielToFire.getId()+"get fired from launcher" + getId());
 		try {
+			
 			Thread.sleep(missielToFire.getFlyTime()*MILISECEND_TO_SECONDE);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		stop(MyRandom.getHit());
+	}
+	
+	public void stop(boolean hit) {
+		daf= new DataAfterFire(this, missielToFire.getDemage(), hit);
+		
 	}
 
 }
