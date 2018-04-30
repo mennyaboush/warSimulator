@@ -19,20 +19,15 @@ public class Missile extends Thread{
 	private int launchTime;
 	private int flyTime;
 	private int demage;
-	private boolean launched;
-
+	
 	public Missile() {
-		super();
-		Random r = new Random();
-		this.id = makeId();
-		launchTime = r.nextInt(2);
-		flyTime = r.nextInt(WarView.MAX_COORD);
-		demage = r.nextInt(3000);
-		launched = false;
+		this(makeId(),new Location(MyRandom.getCity()),
+				MyRandom.getLaunchTime(),MyRandom.flyingTime(),MyRandom.getDemage());
 	}
-	public static String makeId() {
-		return "M"+ID++;
+	public Missile(Location destination , int launchTime) {
+		this(makeId(),destination,launchTime,MyRandom.flyingTime(),MyRandom.getDemage());
 	}
+
 	public Missile(String id,Location destination, int launchTime,int flyTime,int demage) {
 		super();
 		this.id = id;
@@ -40,10 +35,12 @@ public class Missile extends Thread{
 		this.launchTime = launchTime;
 		this.flyTime = flyTime;
 		this.demage = demage;
-		this.launched = false; //missle hasnt launched yet.	
+		//this.launched = false; //missle hasnt launched yet.	
 		initiateLogger(id);
 	}
-	
+		public static String makeId() {
+		return "M"+ID++;
+	}
 	
 
 	
@@ -73,7 +70,7 @@ private void initiateLogger(String logFileName) {
 
 
 	private void launchMissle() {	
-	this.launched = true;
+	//this.launched = true;
 	fireMissle();
 	//logger.log(Level.INFO,"Missle id: "+id+" has hit "+destination);
 	System.out.println("Missle id: "+id+" has hit "+destination);
@@ -155,17 +152,5 @@ private void initiateLogger(String logFileName) {
 	}
 
 
-
-
-	public boolean isLaunched() {
-		return launched;
-	}
-
-
-
-
-	public void setLaunched(boolean launched) {
-		this.launched = launched;
-	}
 	
 }

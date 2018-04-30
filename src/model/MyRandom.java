@@ -24,4 +24,13 @@ public class MyRandom {
 		return City.values()[num];
 	}
 
+	public static int getLaunchTime() {
+		return r.nextInt(1000);
+	}
+
+	public static boolean getHit() {
+		int ProbabilityOfInjury = 7;
+		return r.nextInt(10) > ProbabilityOfInjury ? false : true ;
+	}
+
 }

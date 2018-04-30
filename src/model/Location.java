@@ -20,8 +20,7 @@ public class Location {
 		super();
 		this.city = city;
 		setCordinate(city);
-		this.x = x;
-		this.y = y;
+		
 	}
 
 	private void setCordinate(City city) {

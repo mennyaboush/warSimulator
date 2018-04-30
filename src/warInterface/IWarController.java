@@ -6,16 +6,17 @@ import java.util.List;
 import java.util.Queue;
 
 import Enum.DistractorType;
+import model.DataAfterFire;
 import model.Location;
 import model.Missile;
 public interface IWarController {
 	
 	void addLauncher(String id , boolean isHidden , List<Missile>missels);
 	void addMissleDistractor(String id, List<Missile>missels);
-	void addLauncherDistractor(String id,DistractorType type);
-	void launcherFire(Location target , int  damage , int flyTime  );
-	void launcherDistractorFire(String targetID , int flyTime  );
-	void missleDistractorFire();
+	void addLauncherDistractor(String id,DistractorType type, List<Missile> m);
+	DataAfterFire fireFromeLauncher();
+	DataAfterFire fireFromMissileDistractor();
+	DataAfterFire fireFromDistactorLauncher();
 	void warSummary();
 	void Exit();
 	

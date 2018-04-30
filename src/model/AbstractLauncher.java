@@ -6,27 +6,36 @@ import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-
+import model.Launcherable;
 import Enum.City;
+import controller.WarController;
 
-public abstract class AbstractLauncher implements launcherable {
+public abstract class AbstractLauncher implements Launcherable , Runnable {
 	public static int numberId;
 	private String id;
 	private List<Missile> missileArr = new ArrayList<>();
 	private boolean isHidden;
+	protected final int MILISECEND_TO_SECONDE = 1000;
+	protected WarController war;
 	Location location;
 
-	public AbstractLauncher(String id, List<Missile> missileArr, Location locathion, boolean isHiden) {
+	public AbstractLauncher(String id, List<Missile> missileArr, Location locathion, boolean isHiden , WarController war) {
 		setId(id);
 		setLocation(locathion);
 		setMissileArr(missileArr);
 		setHidden(isHiden);
+		setWar(war);
 	}
 
-	public AbstractLauncher(String id, List<Missile> missileArr, City city, boolean isHiden) {
-		this(id,missileArr,new Location(city) , isHiden);
+	public AbstractLauncher(String id, List<Missile> missileArr, City city, boolean isHiden ,WarController war) {
+		this(id,missileArr,new Location(city) , isHiden,war);
 	}
 
+
+	private void setWar(WarController war) {
+		this.war = war;
+		
+	}
 
 	public Location getLocation() {
 		return location;
@@ -79,11 +88,15 @@ public abstract class AbstractLauncher implements launcherable {
 		return isHidden;
 	}
 
+	@Override
+	public String toString() {
+		return " id=" + id + ", missileArr=" + missileArr + ", isHidden=" + isHidden + ", location="
+				+ location ;
+	}
+
 	public void setHidden(boolean isHidden) {
 		this.isHidden = isHidden;
 	}
 
-	/**/
-	// public abstract boolean checkLocation ();
 
 }

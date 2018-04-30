@@ -7,6 +7,11 @@ import org.omg.CORBA.SetOverrideType;
 import Enum.DistractorType;
 
 public class LauncherDestructors extends AbstractLauncher {
+	@Override
+	public String toString() {
+		return "LauncherDestructors [type=" + type + ", " + super.toString() + "]";
+	}
+
 	DistractorType type;
 	public LauncherDestructors(String id ,DistractorType type , List<Missile> m) {
 		super(id,m,MyRandom.getCity(),false);
@@ -18,7 +23,8 @@ public class LauncherDestructors extends AbstractLauncher {
 	}
 
 	@Override
-	public void fire(Location location) {
+	public DataAfterFire fire(Location location) {
+		return null;
 		// TODO Auto-generated method stub
 
 	}

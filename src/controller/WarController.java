@@ -13,10 +13,53 @@ import model.*;
 import sun.launcher.resources.launcher;
 
 public class WarController implements IWarController {
-	private List<launcherable> launchers = new ArrayList<>();
+	private List<Launcherable> launchers = new ArrayList<>();
+	private List<DataAfterFire> dataList = new ArrayList<>();
+	private List<Launcher> activeLauncher = new ArrayList<>();
+	
+	public List<Launcherable> getLaunchers() {
+		return launchers;
+	}
+
+	public void setLaunchers(List<Launcherable> launchers) {
+		this.launchers = launchers;
+	}
+
+	public List<DataAfterFire> getDataList() {
+		return dataList;
+	}
+
+	public void setDataList(List<DataAfterFire> dataList) {
+		this.dataList = dataList;
+	}
+
+	public List<Launcher> getActiveLauncher() {
+		return activeLauncher;
+	}
+
+	public void setActiveLauncher(List<Launcher> activeLauncher) {
+		this.activeLauncher = activeLauncher;
+	}
+
+	public Scanner getS() {
+		return s;
+	}
+
+	public void setS(Scanner s) {
+		this.s = s;
+	}
+
+	public DataAfterFire getDaf() {
+		return daf;
+	}
+
+	public void setDaf(DataAfterFire daf) {
+		this.daf = daf;
+	}
+
 
 	Scanner s = new Scanner(System.in);
-
+	DataAfterFire daf;
 	public  WarController() {
 		printMenu();
 		int press = s.nextInt();
@@ -26,7 +69,7 @@ public class WarController implements IWarController {
 				addLauncher();
 				break;
 			case 2:
-				System.out.println("Enter city for adding MissleDistractor ");
+				System.out.println("Enter index of city for adding MissleDistractor ");
 				printCitys();
 				int cityIndex = s.nextInt();
 				addMissleDistractor(City.values()[cityIndex]);
@@ -35,34 +78,80 @@ public class WarController implements IWarController {
 				addLauncherDistractor();
 				break;
 			case 4:
-				addLauncher(id, isHidden, missels)
+				daf = fireFromeLauncher();
+				dataList.add(daf);
 				break;
 			case 5:
-				addLauncher(id, isHidden, missels)
+				daf = fireFromDistactorLauncher();
+				dataList.add(daf);
 				break;
 			case 6:
-				addLauncher(id, isHidden, missels)
+				daf = fireFromMissileDistractor();
+				dataList.add(daf); 
 				break;
 			case 7:
-				addLauncher(id, isHidden, missels)
+				printSummary();
 				break;
 			default:
 				break;
 			}
-			System.out.println("bye bye :).");
+			Exit();
 		}
 	}
 
+	private void printSummary() {
+		
+	}
+
+	private void printMenu() {
+		System.out.println("Menu\n1 - add launcher");
+		System.out.println("2 - add missile distactor");
+		System.out.println("3 - add launcher distactor");
+		System.out.println("4 - fire from launcher");
+		System.out.println("5 - fire from distactor-launcher");
+		System.out.println("6 - fire from missle - distractor");
+		System.out.println("7 - war summary");
+		System.out.println("8 - EXIT");
+	
+	}
+
+	private DataAfterFire fireFromRandomLauncher(Location location, Class c) {
+		for (Launcherable launcherable : launchers) {
+			if(launcherable.getClass() == c) {
+				return launcherable.fire(location);
+			}
+		}
+		System.out.println("No launcher exist in the system.");
+		return new DataAfterFire(null, 0, false);
+	}
+
+	private Location getLocathionFromUserByCity() {
+		System.out.println("Enter the number of the city.");
+		printCitys();
+		int cityIndex = s.nextInt();
+		return new Location(City.values()[cityIndex]);
+	}
+
+	private Launcherable findLauncherById(String id, Class c) {
+		for (Launcherable l : launchers) {
+			if(l.getClass() == c)
+				if(((AbstractLauncher)l).getId() == id)
+					return l;
+		}
+		return null;
+	}
+
 	private void addLauncherDistractor() {
-		DistractorType t = EnterType();
-		addLauncherDistractor(makeLauncherDistractorId(), t);
+		DistractorType t = getDistractorTypeFromUser();
+		List<Missile> m = creatMissiles();
+		addLauncherDistractor(makeLauncherDistractorId(), t , m);
 	}
 
 	private String makeLauncherDistractorId() {
 		return "D" + Launcher.numberId++;
 	}
 
-	private DistractorType EnterType() {// PLANE ,SHIP
+	private DistractorType getDistractorTypeFromUser() {// PLANE ,SHIP
 		System.out.println("press 1 - for PLANE ");
 		System.out.println("press 2 - for SHIP ");
 		int p = s.nextInt();
@@ -71,24 +160,10 @@ public class WarController implements IWarController {
 		return DistractorType.SHIP;
 	}
 
-	private void printMenu() {
-		System.out.println("Menu\n1 - add launcher");
-		System.out.println("2 - add missile distactor");
-		System.out.println("3 - add launcher distactor");
-		System.out.println("4 - add fire from launcher");
-		System.out.println("5 - fire from distactor-launcher");
-		System.out.println("6 - fire from missle - distractor");
-		System.out.println("7 - war summary");
-		System.out.println("8 - EXIT");
-
-	}
-
 	private void printCitys() {
-		System.out.println("Select a number representing the desired city");
 		for (City c : City.values()) {
 			System.out.println(c.ordinal() + "-" + c.name());
-		}
-
+		}	
 	}
 
 	private void addMissleDistractor(City city) {
@@ -98,18 +173,17 @@ public class WarController implements IWarController {
 
 	}
 
-	private List creatMissiles() {
-		List<Missile> l = new ArrayList();
-		MyRandom r = new MyRandom();
+	private List<Missile> creatMissiles() {
+		List<Missile> l = new ArrayList<>();
 		System.out.println("Enter target for missle:");
 		String target = s.nextLine();
-		City flag = checkLocation(target);
-		while (flag != null) {
-			l.add(new Missile(Missile.makeId(), new Location(flag), 
-					EnterLaunchTime(), r.flyingTime(), r.getDemage()));
+		City city = checkLocation(target);
+		while (city != null) {
+			l.add(new Missile(Missile.makeId(), new Location(city), 
+					EnterLaunchTime(), MyRandom.flyingTime(), MyRandom.getDemage()));
 			System.out.println("Enter target for missle:");
 			 target = s.nextLine();
-			 flag = checkLocation(target);
+			 city = checkLocation(target);
 		}
 		return l;
 	}
@@ -120,7 +194,6 @@ public class WarController implements IWarController {
 	}
 
 	private City checkLocation(String target) {
-
 		for (City c : City.values()) {
 			if (c.name().equals(target)) {
 				return c;
@@ -130,10 +203,9 @@ public class WarController implements IWarController {
 	}
 
 	private void addLauncher() {
-		MyRandom r = new MyRandom();
 		String id = "L" + Launcher.numberId++;
 		List <Missile> l = creatMissiles();
-		addLauncher(id, r.isHidden(), l);
+		addLauncher(id, MyRandom.isHidden(), l);
 	}
 
 	/** the Queue<Missile> missiles didn't use */
@@ -144,44 +216,73 @@ public class WarController implements IWarController {
 	}
 
 	@Override
-	public void addLauncherDistractor(String id, DistractorType type) {
-		System.out.println("");
+	public void addLauncherDistractor(String id, DistractorType type , List<Missile> m) {
+		LauncherDestructors launcherDestructors = new LauncherDestructors(id, type, m);
+		launchers.add(launcherDestructors);
 	}
 
-	@Override
-	public void launcherFire(Location target, int damage, int flyTime) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void launcherDistractorFire(String targetID, int flyTime) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void missleDistractorFire() {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 	@Override
 	public void warSummary() {
-		// TODO Auto-generated method stub
-
+		printSummary();
 	}
 
 	@Override
 	public void Exit() {
-		// TODO Auto-generated method stub
-
+		System.out.println("bye bye. ");
 	}
 
 	@Override
 	public void addMissleDistractor(String id, List<Missile> missiles) {
 		MissileDestructors md = new MissileDestructors(id, missiles,MyRandom.getCity());
 		launchers.add(md);
+	}
+
+	@Override
+	public DataAfterFire fireFromeLauncher() {
+		System.out.println("Enter launcherId to fire.");
+		String id = s.nextLine();
+		Location location = getLocathionFromUserByCity();
+		Class c = Launcher.class;
+		Launcher l = (Launcher)findLauncherById(id ,c);
+		if(l == null)
+			return fireFromRandomLauncher(location,c);
+		else
+			return l.fire(location);
+	
+	}
+
+	@Override
+	public DataAfterFire fireFromMissileDistractor() {
+		System.out.println("Enter missile distarctor Id to fire.");
+		String id = s.nextLine();
+		Class c = LauncherDestructors.class;
+		// the location didn't relevant for the missileDistreactor - the location is other missile.
+		Location location = new Location(0,0);
+		MissileDestructors md = (MissileDestructors) findLauncherById(id, c);
+		if(md != null) {
+			return md.fire(location);
+		}else {
+			return fireFromRandomLauncher(location, c);
+		}
+	}
+
+
+	@Override
+	public DataAfterFire fireFromDistactorLauncher() {
+		System.out.println("Enter launcher distarctor Id to fire.");
+		String id = s.nextLine();
+		Class c = LauncherDestructors.class;
+		Location location = getLocathionFromUserByCity();
+		LauncherDestructors ld = (LauncherDestructors) findLauncherById(id, c);
+		if(ld != null) {
+			return ld.fire(location);
+		}else {
+			return fireFromRandomLauncher(location, c);
+		}
+	
+		
 	}
 
 }

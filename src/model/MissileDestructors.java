@@ -9,12 +9,18 @@ import Enum.City;
 public class MissileDestructors extends AbstractLauncher {
 	
 
+	@Override
+	public String toString() {
+		return "MissileDestructors ["+ super.toString() + "]";
+	}
+
 	public MissileDestructors(String id, List<Missile> missile,City city) {
 		super(id,missile,city , false);
 	}
 
 	@Override
-	public void fire(Location location) {
+	public DataAfterFire fire(Location location) {
+		return null;
 		// TODO Auto-generated method stub
 
 	}
