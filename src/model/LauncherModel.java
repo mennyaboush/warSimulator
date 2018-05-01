@@ -5,14 +5,13 @@ import java.util.List;
 import java.util.Random;
 
 import Enum.City;
-import controller.WarController;
 
-public class Launcher extends AbstractLauncher {
+public class LauncherModel extends AbstractLauncher {
 	DataAfterFire daf;
 	private final int FIRE_NOW = 0;
 	private Missile missielToFire;
 	// Test : no space in the city(the city is full)
-	public Launcher(String id, City gaza, boolean hiddenLauncher, List<Missile> missiles ,WarController war ) {
+	public LauncherModel(String id, City gaza, boolean hiddenLauncher, List<Missile> missiles ,WarConsol war ) {
 		super(id,missiles,gaza,hiddenLauncher ,war);
 	}
 
@@ -54,5 +53,7 @@ public class Launcher extends AbstractLauncher {
 		daf= new DataAfterFire(this, missielToFire.getDemage(), hit);
 		
 	}
-
+	public static String makeId() {
+		return "L"+numberId++;
+	}
 }

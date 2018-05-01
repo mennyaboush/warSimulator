@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import model.Launcherable;
 import Enum.City;
-import controller.WarController;
 
 public abstract class AbstractLauncher implements Launcherable , Runnable {
 	public static int numberId;
@@ -16,10 +15,10 @@ public abstract class AbstractLauncher implements Launcherable , Runnable {
 	private List<Missile> missileArr = new ArrayList<>();
 	private boolean isHidden;
 	protected final int MILISECEND_TO_SECONDE = 1000;
-	protected WarController war;
+	protected WarConsol war;
 	Location location;
 
-	public AbstractLauncher(String id, List<Missile> missileArr, Location locathion, boolean isHiden , WarController war) {
+	public AbstractLauncher(String id, List<Missile> missileArr, Location locathion, boolean isHiden , WarConsol war) {
 		setId(id);
 		setLocation(locathion);
 		setMissileArr(missileArr);
@@ -27,12 +26,12 @@ public abstract class AbstractLauncher implements Launcherable , Runnable {
 		setWar(war);
 	}
 
-	public AbstractLauncher(String id, List<Missile> missileArr, City city, boolean isHiden ,WarController war) {
+	public AbstractLauncher(String id, List<Missile> missileArr, City city, boolean isHiden ,WarConsol war) {
 		this(id,missileArr,new Location(city) , isHiden,war);
 	}
 
 
-	private void setWar(WarController war) {
+	private void setWar(WarConsol war) {
 		this.war = war;
 		
 	}
