@@ -27,7 +27,7 @@ public class WarView {
 		System.out.println("5 - fire from distactor-launcher");
 		System.out.println("6 - fire from missle - distractor");
 		System.out.println("7 - war summary");
-		System.out.println("-1- EXIT");
+		System.out.println("-1 - EXIT");
 
 	}
 }

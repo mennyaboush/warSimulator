@@ -17,7 +17,7 @@ import viewConsol.LauncherView;
 public class WarConsol {
 	private List<Launcherable> launchers = new ArrayList<>();
 	private List<DataAfterFire> dataList = new ArrayList<>();
-	private List<Launcher> activeLauncher = new ArrayList<>();
+	private List<LauncherController> activeLauncher = new ArrayList<>();
 
 	public List<Launcherable> getLaunchers() {
 		return launchers;
@@ -162,8 +162,8 @@ public class WarConsol {
 		LauncherModel launcherModel = new LauncherModel(LauncherModel.makeId(), City.GAZA
 				,MyRandom.isHidden(),  creatMissiles(), this);
 		LauncherView launcherView = new LauncherView();
-		LauncherController launcer = new LauncherController(launcherView, launcherModel);
-		launchers.add(LauncherController);
+		LauncherController launcherController = new LauncherController(launcherView, launcherModel);
+		launchers.add(launcherController);
 	}
 
 	/** the Queue<Missile> missiles didn't use */
