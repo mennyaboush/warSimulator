@@ -1,4 +1,4 @@
-package model;
+package bl;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-import model.Launcherable;
+
 import Enum.City;
 
 public abstract class AbstractLauncher implements Launcherable , Runnable {
@@ -15,26 +15,19 @@ public abstract class AbstractLauncher implements Launcherable , Runnable {
 	private List<Missile> missileArr = new ArrayList<>();
 	private boolean isHidden;
 	protected final int MILISECEND_TO_SECONDE = 1000;
-	protected WarConsol war;
 	Location location;
 
-	public AbstractLauncher(String id, List<Missile> missileArr, Location locathion, boolean isHiden , WarConsol war) {
+	public AbstractLauncher(String id, List<Missile> missileArr, Location locathion, boolean isHiden ) {
 		setId(id);
 		setLocation(locathion);
 		setMissileArr(missileArr);
 		setHidden(isHiden);
-		setWar(war);
 	}
 
-	public AbstractLauncher(String id, List<Missile> missileArr, City city, boolean isHiden ,WarConsol war) {
-		this(id,missileArr,new Location(city) , isHiden,war);
+	public AbstractLauncher(String id, List<Missile> missileArr, City city, boolean isHiden) {
+		this(id,missileArr,new Location(city) , isHiden);
 	}
 
-
-	private void setWar(WarConsol war) {
-		this.war = war;
-		
-	}
 
 	public Location getLocation() {
 		return location;

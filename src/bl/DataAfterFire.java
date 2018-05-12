@@ -1,4 +1,4 @@
-package model;
+package bl;
 
 public class DataAfterFire {
 	private Launcherable l;

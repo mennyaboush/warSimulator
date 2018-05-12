@@ -1,4 +1,4 @@
-package model;
+package bl;
 
 public interface Launcherable {
 	public DataAfterFire fire(Location location);
