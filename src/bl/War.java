@@ -17,14 +17,23 @@ public class War {
 
 	public void addLauncher() {
 		Launcher l = new Launcher(Launcher.makeId(), City.GAZA, MyRandom.isHidden(),new ArrayList<Missile>());		
+		launchers.add(l);
 		fireAddLauncherEvent(l);
 	}
 
-	private void fireAddLauncherEvent(Launcher l) {
+	public void addLauncherDestructor() {
+		LauncherDestructors ld = new LauncherDestructors(LauncherDestructors.makeId(),
+				MyRandom.getLauncherDestructorsType(), new ArrayList<Missile>());
+		launchers.add(ld);
+		fireAddLauncherEvent(ld);
+	}
+	
+	private void fireAddLauncherEvent(Launcherable l) {
 		for (WarModelEventListener warModelEventListener : allListeners) {
 			warModelEventListener.addLauncherInModel(l);
 		}
 	}
+	
 
 
 

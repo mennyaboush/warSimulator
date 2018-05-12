@@ -6,6 +6,8 @@ import javax.sound.sampled.LineListener;
 
 import Ui.WarUi;
 import bl.Launcher;
+import bl.LauncherDestructors;
+import bl.Launcherable;
 import bl.Missile;
 import bl.War;
 
@@ -28,8 +30,15 @@ public class WarController implements WarModelEventListener, WarUiEventListener 
 	}
 
 	@Override
-	public void addLauncherInModel(Launcher l) {
+	public void addLauncherInModel(Launcherable l) {
 		warView.showLaunchers(l);
+	}
+
+	
+
+	@Override
+	public void addLauncherDestructorFromUi() {
+		war.addLauncherDestructor();
 	}
 
 }

@@ -6,5 +6,6 @@ import bl.Missile;
 
 public interface WarUiEventListener {
 	void addLauncherFromUi();
+	void addLauncherDestructorFromUi();
 }
 

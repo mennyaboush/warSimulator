@@ -5,6 +5,11 @@ import java.util.Random;
 import Enum.City;
 
 public class Location {
+	@Override
+	public String toString() {
+		return "Location [city=" + city + ", x=" + x + ", y=" + y + "]";
+	}
+
 	City city;
 	private int x;
 	private int y;

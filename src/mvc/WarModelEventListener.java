@@ -1,10 +1,12 @@
 package mvc;
 
+
 import java.util.List;
 
-import Enum.DistractorType;
 import bl.Launcher;
-
+import bl.LauncherDestructors;
+import bl.Launcherable;
 public interface WarModelEventListener {
-	void addLauncherInModel(Launcher l);// after launcher add in the model 
+	void addLauncherInModel(Launcherable l);// after launcher add in the model
+	
 }
