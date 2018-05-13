@@ -14,6 +14,7 @@ public abstract class AbstractLauncher implements Launcherable , Runnable {
 	private String id;
 	private List<Missile> missileArr = new ArrayList<>();
 	private boolean isHidden;
+	private boolean isActive;
 	protected final int MILISECEND_TO_SECONDE = 1000;
 	Location location;
 
@@ -22,6 +23,15 @@ public abstract class AbstractLauncher implements Launcherable , Runnable {
 		setLocation(locathion);
 		setMissileArr(missileArr);
 		setHidden(isHiden);
+		setActive(false);
+	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 
 	public AbstractLauncher(String id, List<Missile> missileArr, City city, boolean isHiden) {

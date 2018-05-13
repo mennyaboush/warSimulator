@@ -25,7 +25,7 @@ public class DataAfterFire {
 
 	@Override
 	public String toString() {
-		return "DataAfterFire [l=" + l + ", damage=" + damage + ", hit=" + hit + "]";
+		return "[Missile fire from=" + l + ", damage=" + damage + ", hit=" + hit + "]";
 	}
 
 	public Launcherable getL() {

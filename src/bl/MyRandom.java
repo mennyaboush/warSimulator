@@ -21,7 +21,7 @@ public class MyRandom {
 	}
 	public static City getCity() {
 		int size = City.values().length;
-		int num = 1+ r.nextInt(size+1);
+		int num = 1+ r.nextInt(size);
 		return City.values()[num];
 	}
 

@@ -5,9 +5,11 @@ import java.util.Random;
 import Enum.City;
 
 public class Location {
+	private static final int MAX_COORD = 20;
+
 	@Override
 	public String toString() {
-		return "Location [city=" + city + ", x=" + x + ", y=" + y + "]";
+		return "[city=" + city + ", x=" + x + ", y=" + y + "]";
 	}
 
 	City city;
@@ -33,7 +35,7 @@ public class Location {
 		case GAZA:
 			try {
 				setX(r.nextInt(5));
-				setY(4 + r.nextInt(8));
+				setY(r.nextInt(5));
 			} catch (Throwable e) {
 				System.out.println("thrwo in GAZA");
 				e.printStackTrace();
@@ -42,6 +44,14 @@ public class Location {
 			break;
 
 		default:
+			try {
+				setX(5 + r.nextInt(MAX_COORD));
+				setY(5 + r.nextInt(MAX_COORD));
+			} catch (Throwable e) {
+				System.out.println("thrwo in GAZA");
+				e.printStackTrace();
+			}
+
 			break;
 		}
 	}
@@ -63,5 +73,7 @@ public class Location {
 		
 		this.y = y;
 	}
+
+
 
 }

@@ -4,7 +4,9 @@ import java.util.List;
 
 import javax.sound.sampled.LineListener;
 
+import Enum.City;
 import Ui.WarUi;
+import bl.DataAfterFire;
 import bl.Launcher;
 import bl.LauncherDestructors;
 import bl.Launcherable;
@@ -33,12 +35,24 @@ public class WarController implements WarModelEventListener, WarUiEventListener 
 	public void addLauncherInModel(Launcherable l) {
 		warView.showLaunchers(l);
 	}
-
-	
-
 	@Override
 	public void addLauncherDestructorFromUi() {
 		war.addLauncherDestructor();
+	}
+
+	@Override
+	public void addMissileDestructorFromUi() {
+		war.addMissileDestructor();
+	}
+
+	@Override
+	public void fireFromLauncherFromUi(City city) {
+		war.fireFromLauncher(city);
+	}
+
+	@Override
+	public void fireFromeLauncherInModel(DataAfterFire daf) {
+		warView.showFire(daf);
 	}
 
 }

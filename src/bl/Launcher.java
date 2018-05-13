@@ -7,7 +7,7 @@ import java.util.Random;
 import Enum.City;
 
 public class Launcher extends AbstractLauncher {
-	DataAfterFire daf;
+	DataAfterFire daf = null;
 	private final int FIRE_NOW = 0;
 	private Missile missielToFire;
 	
@@ -22,7 +22,14 @@ public class Launcher extends AbstractLauncher {
 	public  DataAfterFire fire(Location destination) {
 		missielToFire = new Missile(destination ,FIRE_NOW );
 		run();
-		return daf;
+		setActive(false);
+		return getDataAfterFire();
+	}
+
+
+
+	private DataAfterFire getDataAfterFire() {
+		return new DataAfterFire(this, missielToFire.getDemage(), MyRandom.getHit());
 	}
 
 
@@ -40,8 +47,13 @@ public class Launcher extends AbstractLauncher {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+		try {
+			Thread.sleep(MILISECEND_TO_SECONDE * missielToFire.getFlyTime());
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		
+		System.out.println("Missile after flyTime");
 	}
 
 
@@ -50,4 +62,12 @@ public class Launcher extends AbstractLauncher {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+
+	public DataAfterFire fire(City city) {
+		Location location = new Location(city); // must get location properly. for now its randome
+		return fire(location);
+	}
+
 }
