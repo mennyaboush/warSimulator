@@ -17,12 +17,13 @@ public class MyRandom {
 	}
 
 	public static int flyingTime() {
-		return r.nextInt(10);
+		return 1 + r.nextInt(10);
 	}
+	
 	public static City getCity() {
 		int size = City.values().length;
-		int num = 1+ r.nextInt(size);
-		return City.values()[num];
+		int num = r.nextInt(size-1);
+		return City.values()[num+1];
 	}
 
 	public static int getLaunchTime() {

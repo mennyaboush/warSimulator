@@ -9,16 +9,18 @@ import java.util.logging.SimpleFormatter;
 
 import Enum.City;
 
-public abstract class AbstractLauncher implements Launcherable , Runnable {
+public abstract class AbstractLauncher <E extends AbstractMissile>implements Launcherable, Runnable {
 	public static int numberId;
 	private String id;
-	private List<Missile> missileArr = new ArrayList<>();
+	protected static int FIRE_NOW = 0;
+	private List<E> missileArr = new ArrayList<>();
 	private boolean isHidden;
 	private boolean isActive;
 	protected final int MILISECEND_TO_SECONDE = 1000;
+	protected E missielToFire;
 	Location location;
 
-	public AbstractLauncher(String id, List<Missile> missileArr, Location locathion, boolean isHiden ) {
+	public AbstractLauncher(String id, List<E> missileArr, Location locathion, boolean isHiden) {
 		setId(id);
 		setLocation(locathion);
 		setMissileArr(missileArr);
@@ -34,10 +36,9 @@ public abstract class AbstractLauncher implements Launcherable , Runnable {
 		this.isActive = isActive;
 	}
 
-	public AbstractLauncher(String id, List<Missile> missileArr, City city, boolean isHiden) {
-		this(id,missileArr,new Location(city) , isHiden);
+	public AbstractLauncher(String id, List<E> missileArr, City city, boolean isHiden) {
+		this(id, missileArr, new Location(city), isHiden);
 	}
-
 
 	public Location getLocation() {
 		return location;
@@ -70,11 +71,11 @@ public abstract class AbstractLauncher implements Launcherable , Runnable {
 		setHidden(false);
 	}
 
-	public List<Missile> getMissileArr() {
+	public List<E> getMissileArr() {
 		return missileArr;
 	}
 
-	public void setMissileArr(List<Missile> missileArr) {
+	public void setMissileArr(List<E> missileArr) {
 		this.missileArr = missileArr;
 	}
 
@@ -92,13 +93,20 @@ public abstract class AbstractLauncher implements Launcherable , Runnable {
 
 	@Override
 	public String toString() {
-		return " id=" + id + ", missileArr=" + missileArr + ", isHidden=" + isHidden + ", location="
-				+ location ;
+		return " id=" + id + ", missileArr=" + missileArr + ", isHidden=" + isHidden + ", location=" + location;
 	}
 
 	public void setHidden(boolean isHidden) {
 		this.isHidden = isHidden;
 	}
 
-
+	protected DataAfterFire getDataAfterFire() {
+		if(missielToFire.getClass().getName().compareTo(Missile.class.getName()) == 0) {
+			Missile temp = Missile.class.cast(missielToFire);
+			return new DataAfterFire(this, temp.getDemage(), temp.isHit() ? false : MyRandom.getHit(),
+					temp.getDestination());
+		}
+		return null;
+		
+	}
 }

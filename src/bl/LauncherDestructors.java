@@ -42,9 +42,12 @@ public class LauncherDestructors extends AbstractLauncher {
 	}
 
 	@Override
-	public DataAfterFire fire(Location location) {
-		// TODO Auto-generated method stub
-		return null;
+	public synchronized DataAfterFire fire(Location destination) {
+		missielToFire = new Missile(destination, FIRE_NOW);
+		missielToFire.fire();
+		return getDataAfterFire();
 	}
+
+	
 	
 }

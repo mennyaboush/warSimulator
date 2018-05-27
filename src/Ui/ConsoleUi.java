@@ -23,6 +23,7 @@ public class ConsoleUi implements WarUi {
 				int press;
 				while (true) {
 					press = getPressFromMenu();
+					System.out.println("Press = " + press);
 					getAction(press);
 				}
 			}
@@ -40,6 +41,7 @@ public class ConsoleUi implements WarUi {
 	}
 
 	private void getAction(int press) {
+		City city;
 		switch (press) {
 		case 1:
 			System.out.println("add launcher in - ConsolUi(getAction).");
@@ -61,27 +63,59 @@ public class ConsoleUi implements WarUi {
 			break;
 		case 4:
 			System.out.println("fire from launcher in - ConsolUi(getAction).");
-			City city = getCityFromUser();
-			for (WarUiEventListener warUiEventListener : allListeners) {
-				warUiEventListener.fireFromLauncherFromUi(city);
-			}
+
+			city = getCityFromUser();
+			new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					for (WarUiEventListener warUiEventListener : allListeners) {
+						warUiEventListener.fireFromLauncherFromUi(city);
+					}
+				}
+			}).start();
+			break;
+		case 5:
+			System.out.println("fire from launcherDestructors in - ConsolUi(getAction).");
+			new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					for (WarUiEventListener warUiEventListener : allListeners) {
+						warUiEventListener.fireFromlauncherDestructorsFromUi();
+					}
+				}
+			}).start();
+			break;
+		case 6:
+			System.out.println("fire from missileDestructors in - ConsolUi(getAction).");
+			new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					for (WarUiEventListener warUiEventListener : allListeners) {
+						warUiEventListener.fireFromMissileDestructorsFromUi();
+					}
+				}
+			}).start();
 			break;
 		default:
+			System.out.println("on defult in getAction");
 			break;
 		}
 
 	}
 
 	private City getCityFromUser() {
-		s.nextLine(); // clean buffer.
 		int press = -1;
+		s.nextLine(); // Clean the buffer
 		do {
 			System.out.println("press index for choose city.");
 			for (City city : City.values())
 				System.out.println(city.ordinal() + " - " + city.name());
 
 			press = s.nextInt();
-			
+
 			if (press < 0 && press > City.values().length)
 				System.out.println("wrong index chooce again.");
 		} while (press < 0 && press > City.values().length);
@@ -89,15 +123,8 @@ public class ConsoleUi implements WarUi {
 	}
 
 	private int getPressFromMenu() {
-		int press = -1;
-		while (press < 1 || press > 4) {
-			System.out.println("1- add launcher.");
-			System.out.println("2- add launcherDestructors.");
-			System.out.println("3- add MissileDestructor.");
-			System.out.println("4- fire from launcher.");
-			press = s.nextInt();
-		}
-		return press;
+		Menu menu = new Menu();
+		return menu.getPressFromMenu();
 	}
 
 	@Override
@@ -105,4 +132,29 @@ public class ConsoleUi implements WarUi {
 		System.out.println(daf);
 	}
 
+	class Menu {
+		private List<String> menu = new ArrayList<>();
+
+		public Menu() {
+			menu.add("add launcher.");
+			menu.add("add launcherDestructors.");
+			menu.add("add MissileDestructor.");
+			menu.add("fire from launcher.");
+			menu.add("fire from launcherDestructors.");
+			menu.add("fire from MissileDestructors.");
+		}
+
+		public int getPressFromMenu() {
+			int size = menu.size();
+			int press = -1;
+			do {
+				for (int i = 1; i <= size; i++)
+					System.out.println(i + " - " + menu.get(i - 1));
+				press = s.nextInt();
+			} while (press <= 0 || press > menu.size());
+
+			System.out.println("press = "+ press);
+			return press;
+		}
+	}
 }

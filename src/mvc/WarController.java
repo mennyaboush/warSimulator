@@ -55,4 +55,16 @@ public class WarController implements WarModelEventListener, WarUiEventListener 
 		warView.showFire(daf);
 	}
 
+	@Override
+	public void fireFromlauncherDestructorsFromUi() {
+		war.fireFromlauncherDestructor();
+	}
+
+	@Override
+	public void fireFromMissileDestructorsFromUi() {
+		war.fireFromMissileDestructor();	
+	}
+
+	
+
 }
