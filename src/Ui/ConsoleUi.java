@@ -7,6 +7,7 @@ import java.util.Scanner;
 import bl.DataAfterFire;
 import bl.Launcher;
 import bl.Launcherable;
+import bl.SummaryObj;
 import mvc.WarController;
 import mvc.WarUiEventListener;
 import Enum.City;
@@ -14,14 +15,14 @@ import Enum.City;
 public class ConsoleUi implements WarUi {
 	private List<WarUiEventListener> allListeners = new ArrayList<>();
 	private final Scanner s = new Scanner(System.in);
-
+	private boolean close = false;
 	public ConsoleUi() {
 		new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				int press;
-				while (true) {
+				while (!close) {
 					press = getPressFromMenu();
 					System.out.println("Press = " + press);
 					getAction(press);
@@ -99,6 +100,17 @@ public class ConsoleUi implements WarUi {
 				}
 			}).start();
 			break;
+		case 7:
+			System.out.println("Print summary in - ConsolUi(getAction).");
+			for (WarUiEventListener warUiEventListener : allListeners) {
+				warUiEventListener.printSummaryFromUi();
+				break;
+			}
+		case 8:
+			System.out.println("Exit in - ConsolUi(getAction).");
+			for (WarUiEventListener warUiEventListener : allListeners) {
+				warUiEventListener.ExitFromUi();
+			}
 		default:
 			System.out.println("on defult in getAction");
 			break;
@@ -136,12 +148,14 @@ public class ConsoleUi implements WarUi {
 		private List<String> menu = new ArrayList<>();
 
 		public Menu() {
-			menu.add("add launcher.");
-			menu.add("add launcherDestructors.");
-			menu.add("add MissileDestructor.");
-			menu.add("fire from launcher.");
-			menu.add("fire from launcherDestructors.");
-			menu.add("fire from MissileDestructors.");
+			menu.add("Add launcher.");
+			menu.add("Add launcherDestructors.");
+			menu.add("Add MissileDestructor.");
+			menu.add("Fire from launcher.");
+			menu.add("Fire from launcherDestructors.");
+			menu.add("Fire from MissileDestructors.");
+			menu.add("Print summary.");
+			menu.add("Exit.");
 		}
 
 		public int getPressFromMenu() {
@@ -156,5 +170,16 @@ public class ConsoleUi implements WarUi {
 			System.out.println("press = "+ press);
 			return press;
 		}
+	}
+
+	@Override
+	public void showSummary(SummaryObj summaryObj) {
+		System.out.println(summaryObj);
+	}
+
+	@Override
+	public void showExit() {
+		close = true;
+		System.out.println("Exit= mustToFix");
 	}
 }

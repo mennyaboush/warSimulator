@@ -12,5 +12,7 @@ public interface WarUiEventListener {
 	void fireFromLauncherFromUi(City city);
 	void fireFromlauncherDestructorsFromUi();
 	void fireFromMissileDestructorsFromUi();
+	void printSummaryFromUi();
+	void ExitFromUi();
 }
 

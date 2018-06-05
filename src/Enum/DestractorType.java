@@ -1,5 +1,5 @@
 package Enum;
 
-public enum DistractorType {
+public enum DestractorType {
 PLANE ,SHIP 
 }

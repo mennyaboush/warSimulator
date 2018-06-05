@@ -1,6 +1,8 @@
 package bl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import Enum.City;
 
@@ -13,17 +15,11 @@ public class MissileDestructors extends AbstractLauncher {
 
 	public MissileDestructors(String id, List<MissileD> missile, City city) {
 		super(id, missile, city, false);
+		printToLog("222");
 	}
 
-	public synchronized DataAfterFire fire() {// we need to creat 
-		Missile missile= getActiveMissile();;
-		missielToFire = new MissileD(missile, FIRE_NOW);
-		return null;
-	}
-
-	private Missile getActiveMissile() {
-		// TODO Auto-generated method stub
-		return null;
+	public MissileDestructors(String id, ArrayList<MissileD> missiles) {
+		this(id,missiles , MyRandom.getCity());
 	}
 
 	@Override
@@ -42,8 +38,10 @@ public class MissileDestructors extends AbstractLauncher {
 		return "D" + numberId++;
 	}
 
+	@SuppressWarnings("unchecked")
 	public DataAfterFire fire(Missile missile) {
 		missielToFire = new MissileD(missile, FIRE_NOW);
+		System.out.println("missileD before fire");
 		missielToFire.fire();
 		return getDataAfterFire();
 	}
@@ -52,6 +50,18 @@ public class MissileDestructors extends AbstractLauncher {
 	public DataAfterFire fire(Location location) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public String getFileName() {
+		return "MissileDestructors_"+getId()+".txt";
+	}
+
+	
+
+	@Override
+	protected void printToLog(String message) {
+		theLogger.log(Level.INFO, message, this);
 	}
 
 }

@@ -4,6 +4,7 @@ public class DataAfterFire {
 	private Launcherable l;
 	private int damage;
 	private boolean hit;
+	private boolean fireComplete = true;
 	private Location destination;
 	
 	public Location getDestination() {
@@ -31,6 +32,17 @@ public class DataAfterFire {
 		this.damage = damage;
 		this.hit = hit;
 		setDestination(location);
+	}
+	public DataAfterFire(Launcherable l , int damage , boolean hit, Location location ,boolean fireComplete) {
+		this(l,damage,hit,location);
+		setFireComplete(false);
+	}
+	public boolean isFireComplete() {
+		return fireComplete;
+	}
+
+	public void setFireComplete(boolean fireComplete) {
+		this.fireComplete = fireComplete;
 	}
 
 	@Override

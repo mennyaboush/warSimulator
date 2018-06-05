@@ -11,6 +11,7 @@ import bl.Launcher;
 import bl.LauncherDestructors;
 import bl.Launcherable;
 import bl.Missile;
+import bl.SummaryObj;
 import bl.War;
 
 public class WarController implements WarModelEventListener, WarUiEventListener {
@@ -63,6 +64,26 @@ public class WarController implements WarModelEventListener, WarUiEventListener 
 	@Override
 	public void fireFromMissileDestructorsFromUi() {
 		war.fireFromMissileDestructor();	
+	}
+
+	@Override
+	public void printSummaryFromUi() {
+		war.printSummary();
+	}
+
+	@Override
+	public void summaryInModle(SummaryObj summaryObj) {
+		warView.showSummary(summaryObj);
+	}
+
+	@Override
+	public void ExitFromUi() {
+		war.Exit();
+	}
+
+	@Override
+	public void ExitInModle() {
+	warView.showExit();
 	}
 
 	

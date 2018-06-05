@@ -3,7 +3,7 @@ package bl;
 import java.util.Random;
 
 import Enum.City;
-import Enum.DistractorType;
+import Enum.DestractorType;
 
 public class MyRandom {
 	private static Random r = new Random();
@@ -35,8 +35,8 @@ public class MyRandom {
 		return r.nextInt(10) > ProbabilityOfInjury ? false : true ;
 	}
 
-	public static DistractorType getLauncherDestructorsType() {
-		return r.nextBoolean()? DistractorType.PLANE : DistractorType.SHIP ;
+	public static DestractorType getLauncherDestructorsType() {
+		return r.nextBoolean()? DestractorType.PLANE : DestractorType.SHIP ;
 	}
 
 }
