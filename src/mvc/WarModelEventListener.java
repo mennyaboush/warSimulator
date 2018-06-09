@@ -16,4 +16,6 @@ public interface WarModelEventListener {
 	void summaryInModle(SummaryObj summaryObj);
 
 	void ExitInModle();
+
+	void startUiInModel();
 }

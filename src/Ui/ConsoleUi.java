@@ -12,24 +12,28 @@ import mvc.WarController;
 import mvc.WarUiEventListener;
 import Enum.City;
 
+/*
+ * must to fix:
+ * 1. start the Ui after the data from json file get action
+ */
 public class ConsoleUi implements WarUi {
 	private List<WarUiEventListener> allListeners = new ArrayList<>();
 	private final Scanner s = new Scanner(System.in);
 	private boolean close = false;
+	private boolean startUi = false;
+	UiConsoleThread uiConsoleThread;
 	public ConsoleUi() {
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				int press;
-				while (!close) {
-					press = getPressFromMenu();
-					System.out.println("Press = " + press);
-					getAction(press);
-				}
-			}
-		}).start();
 	}
+private class UiConsoleThread extends Thread{
+	public void run() {
+		int press;
+		while (!close) {
+			press = getPressFromMenu();
+			System.out.println("Press = " + press);
+			getAction(press);
+		}
+	}
+}
 
 	@Override
 	public void registerListener(WarController warController) {
@@ -181,5 +185,11 @@ public class ConsoleUi implements WarUi {
 	public void showExit() {
 		close = true;
 		System.out.println("Exit= mustToFix");
+	}
+
+	@Override
+	public void startUi() {
+		uiConsoleThread = new UiConsoleThread();
+		uiConsoleThread.start();
 	}
 }

@@ -12,45 +12,72 @@ import org.json.JSONException;
 import com.sun.jmx.snmp.tasks.Task;
 
 import Enum.City;
-import Model.MyTimer;
 import mvc.WarController;
 import mvc.WarModelEventListener;
 
 public class War {
+	
+//	static {
+//		private final int startWar = 
+//	}
+//	
 	public static String WAR_FILE = "warFile.txt";
 	private List<WarModelEventListener> allListeners = new ArrayList<>();
 	private List<Launcherable> launchers = new ArrayList<>();
 	private List<DataAfterFire> dataList = new ArrayList<>();
 	private boolean exit = false;
+	private boolean exitTimerTask = false;
 	MyTimer timer = MyTimer.getInstance();
+
 	public War() {
 		readData();
 		int maxTime = getMaxTime();
-		timer.getTimer().schedule(new Task() {
-			
+
+		/* evry sec the timer task over on all the launchers and fire if they need */
+		timer.getTimer().schedule(new TimerTask() {
+			int time = 0;
+
 			@Override
 			public void run() {
-				while() {
-					
+				while (!exitTimerTask) {
+					for (Launcherable l : launchers)
+						dataList.addAll( l.fireIfNeed(time));
+					time++;
+					System.out.println("time : " + time );
+					if (time >= maxTime) {
+						System.out.println("max time");
+						exitTimerTask = true;
+						fireStartUiEvent();
+					}
 				}
-			}
-			
-			@Override
-			public void cancel() {
-				// TODO Auto-generated method stub
 				
+			}
+
+			private void fireStartUiEvent() {
+				for (WarModelEventListener warModelEventListener : allListeners) {
+					warModelEventListener.startUiInModel();
+				}
 			}
 		}, 1000);
 	}
+
+	/* get the max time to know when the program need to start runtime command */
 	private int getMaxTime() {
-		int max = 0 ;
+		int max = 0;
 		for (Launcherable launcherable : launchers) {
-			if(max > ((launcherable.getClass())launcherable).)
+			List<AbstractMissile> currentMissiles = ((AbstractLauncher) launcherable).getMissileArr();
+			if (currentMissiles != null) {
+				for (AbstractMissile m : currentMissiles) {
+					if (m.getLaunchTime() > max)
+						max = m.getLaunchTime();
+				}
+			}
 		}
-		return 0;
+		return max;
 	}
+
 	private void readData() {
-		
+
 		try {
 			JsonReader jr = new JsonReader();
 			launchers.addAll(jr.ReadLaunchers());
@@ -60,8 +87,9 @@ public class War {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
+
 	}
+
 	public void registerListener(WarController warController) {
 		allListeners.add(warController);
 	}

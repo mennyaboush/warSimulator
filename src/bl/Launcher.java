@@ -13,25 +13,22 @@ import Enum.City;
 public class Launcher extends AbstractLauncher {
 	DataAfterFire daf = null;
 	private final int FIRE_NOW = 0;
-	// Test : no space in the city(the city is full)
+
 	public Launcher(String id, City gaza, boolean hiddenLauncher, List<Missile> missiles) {
 		super(id, missiles, gaza, hiddenLauncher);
 	}
 
-	
-
 	@Override
 	public String getFileName() {
-		return "Launcher_"+getId()+".txt";
+		return "Launcher_" + getId() + ".txt";
 	}
+
 	@Override
 	public DataAfterFire fire(Location destination) {
-		missielToFire = new Missile(destination, FIRE_NOW);
+		missielToFire = new Missile(destination, MyTimer.getTime());
 		missielToFire.fire();
 		return getDataAfterFire();
 	}
-
-	
 
 	@Override
 	public String toString() {
@@ -63,4 +60,23 @@ public class Launcher extends AbstractLauncher {
 		theLogger.log(Level.INFO, message, this);
 	}
 
+	@Override
+	public List<DataAfterFire> fireIfNeed(int time) {
+		System.out.println(this+" inside fire if need.");
+		List<Missile> removeList = new ArrayList();
+		List<Missile> arr = getMissileArr();
+		List<DataAfterFire> data = new ArrayList<>();
+		if (arr != null) {
+			for (Missile m : arr) {
+				if (m.getLaunchTime() <= time) {
+					System.out.println(m + "need to be fire");
+					missielToFire = m;
+					data.add(fire(((Missile) m).getDestination()));
+					removeList.add(m);
+				}
+			}
+		}
+		arr.removeAll(removeList);
+		return data;
+	}
 }

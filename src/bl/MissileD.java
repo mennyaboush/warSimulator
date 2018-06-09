@@ -20,11 +20,21 @@ public class MissileD extends AbstractMissile {
 		if (missileToDestruct != null) {
 			missileToDestruct.getHit();
 			System.out.println("missileD hit the missile");
-			setHit(true);
+			setHit(true , getLaunchTime());
 		}else {
 			System.out.println("missile destruct miss.");
 			setHit(false);
 		}
+	}
+
+
+	public Missile getMissileToDestruct() {
+		return missileToDestruct;
+	}
+
+
+	public void setMissileToDestruct(Missile missileToDestruct) {
+		this.missileToDestruct = missileToDestruct;
 	}
 
 }

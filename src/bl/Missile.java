@@ -57,6 +57,7 @@ public class Missile extends AbstractMissile {
 	public synchronized void run() {
 		try {
 			wait(getFlyTime() * MILI_TO_SEC);
+			
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

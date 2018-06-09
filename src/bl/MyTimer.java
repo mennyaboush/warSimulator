@@ -1,27 +1,34 @@
-package Model;
+package bl;
 
+import java.util.Calendar;
 import java.util.Timer;
-//Singeltone class.
-/*
- * This class should be the timer for the whole war
- * Rocket will start shooting at the currect time by this timer.
- * 
- */
-public class MyTimer{
+import java.util.TimerTask;
+
+
+public class MyTimer {//Singleton class.
 	
 	private static MyTimer myTimer;
 	private static Timer timer;
-	
+	private static int time = 0;
 	private MyTimer(){}
 	
 	public static MyTimer getInstance(){
 		if(myTimer == null){
 			myTimer=new MyTimer();
 			timer = new Timer();
+			timer.schedule(new TimerTask() {
+				
+				@Override
+				public void run() {
+					time++;
+				}
+			}, 1000);
 		}
 		return myTimer;
 	}
-	
+	public static int getTime() {
+		return time;
+	}
 	
 	public Timer getTimer() {
 		return myTimer.timer;
@@ -30,8 +37,5 @@ public class MyTimer{
 	public void setTimer(Timer timer) {
 		myTimer.timer = timer;
 	}
-
-	
-	
 	
 }

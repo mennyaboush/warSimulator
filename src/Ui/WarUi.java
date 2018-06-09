@@ -17,6 +17,8 @@ public interface WarUi  {
 	void showSummary(SummaryObj summaryObj);
 
 	void showExit();
+
+	void startUi();
 	
 	
 	

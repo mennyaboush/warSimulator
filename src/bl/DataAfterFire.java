@@ -6,7 +6,50 @@ public class DataAfterFire {
 	private boolean hit;
 	private boolean fireComplete = true;
 	private Location destination;
-	
+
+	/*
+	 * for now startFireTime and finishFireTime no work
+	 */
+	private int startFireTime;
+	private int finishFireTime;
+
+	public DataAfterFire(Launcherable l, int damage, boolean hit, Location location) {
+		this.l = l;
+		this.damage = damage;
+		this.hit = hit;
+		setDestination(location);
+		
+	}
+
+	public DataAfterFire(Launcherable l, int damage, boolean hit, Location location, boolean fireComplete) {
+		this(l, damage, hit, location);
+		setFireComplete(false);
+		
+	}
+
+	public DataAfterFire(Launcherable l, int demage, boolean hit, Location location, boolean fireComplete,
+			int launchTime, int finishFireTime) {
+		this(l, demage, hit, location);
+		setStartFireTime(launchTime);
+		setFinishFireTime(finishFireTime);
+	}
+
+	public int getStartFireTime() {
+		return startFireTime;
+	}
+
+	public void setStartFireTime(int startFireTime) {
+		this.startFireTime = startFireTime;
+	}
+
+	public int getFinishFireTime() {
+		return finishFireTime;
+	}
+
+	public void setFinishFireTime(int finishFireTime) {
+		this.finishFireTime = finishFireTime;
+	}
+
 	public Location getDestination() {
 		return destination;
 	}
@@ -27,16 +70,6 @@ public class DataAfterFire {
 		this.hit = hit;
 	}
 
-	public DataAfterFire(Launcherable l , int damage , boolean hit, Location location) {
-		this.l=l;
-		this.damage = damage;
-		this.hit = hit;
-		setDestination(location);
-	}
-	public DataAfterFire(Launcherable l , int damage , boolean hit, Location location ,boolean fireComplete) {
-		this(l,damage,hit,location);
-		setFireComplete(false);
-	}
 	public boolean isFireComplete() {
 		return fireComplete;
 	}
@@ -47,7 +80,10 @@ public class DataAfterFire {
 
 	@Override
 	public String toString() {
-		return "[Missile fire from=" + l + ",destination = "+destination +" damage=" + damage + ", hit=" + hit + "]";
+		if (finishFireTime != -1)
+			return "[Missile fire from=" + l + ",destination = " + destination + " damage=" + damage + ", hit=" + hit
+					+ "\nFire start in time " + startFireTime + "\nFire end in " + finishFireTime + " time ]";
+		return "[Missile fire from=" + l + ",destination = " + destination + " damage=" + damage + ", hit=" + hit+" ]";
 	}
 
 	public Launcherable getL() {

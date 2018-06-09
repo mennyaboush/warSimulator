@@ -122,7 +122,7 @@ public abstract class AbstractLauncher <E extends AbstractMissile>implements Lau
 		if(missielToFire.getClass().getName().compareTo(Missile.class.getName()) == 0) {
 			Missile temp = Missile.class.cast(missielToFire);
 			DataAfterFire daf = new DataAfterFire(this, temp.getDemage(), temp.isFireComplete() ? MyRandom.getHit() : false,
-					temp.getDestination(),temp.isFireComplete());
+					temp.getDestination(),temp.isFireComplete() , temp.getLaunchTime() , temp.getDestructTime() );
 			printDataToLogfile(daf);
 			return daf;
 		}
@@ -139,6 +139,11 @@ public abstract class AbstractLauncher <E extends AbstractMissile>implements Lau
 	public void printDataToLogfile(DataAfterFire daf) {
 		printToLog(daf.toString());
 	}
+	
+	/*over on the missiles in the array
+	 * if missile need to be fire the launcher fire and delete 
+	 * this missile from the array*/
+	public abstract List<DataAfterFire> fireIfNeed(int time) ;
 	
 
 }

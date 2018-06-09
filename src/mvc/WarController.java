@@ -86,6 +86,11 @@ public class WarController implements WarModelEventListener, WarUiEventListener 
 	warView.showExit();
 	}
 
+	@Override
+	public void startUiInModel() {
+		warView.startUi();
+	}
+
 	
 
 }

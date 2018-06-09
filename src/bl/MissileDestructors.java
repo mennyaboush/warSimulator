@@ -19,7 +19,7 @@ public class MissileDestructors extends AbstractLauncher {
 	}
 
 	public MissileDestructors(String id, ArrayList<MissileD> missiles) {
-		this(id,missiles , MyRandom.getCity());
+		this(id, missiles, MyRandom.getCity());
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class MissileDestructors extends AbstractLauncher {
 
 	@SuppressWarnings("unchecked")
 	public DataAfterFire fire(Missile missile) {
-		missielToFire = new MissileD(missile, FIRE_NOW);
+		missielToFire = new MissileD(missile, MyTimer.getTime());
 		System.out.println("missileD before fire");
 		missielToFire.fire();
 		return getDataAfterFire();
@@ -54,14 +54,30 @@ public class MissileDestructors extends AbstractLauncher {
 
 	@Override
 	public String getFileName() {
-		return "MissileDestructors_"+getId()+".txt";
+		return "MissileDestructors_" + getId() + ".txt";
 	}
-
-	
 
 	@Override
 	protected void printToLog(String message) {
 		theLogger.log(Level.INFO, message, this);
+	}
+
+	@Override
+	public List<DataAfterFire> fireIfNeed(int time) {
+		List<MissileD> arr = getMissileArr();
+		List<MissileD> removeList = new ArrayList();
+		List<DataAfterFire> data= new ArrayList<>();
+		if (arr != null) {
+			for (MissileD m : arr) {
+				if (m.getLaunchTime() <= time) {
+					missielToFire = m;
+					data.add(fire(m.getMissileToDestruct()));
+					removeList.add(m);
+				}
+			}
+		}
+		arr.removeAll(removeList);
+		return data;
 	}
 
 }
