@@ -12,8 +12,6 @@ import Enum.City;
 
 public class Launcher extends AbstractLauncher {
 	DataAfterFire daf = null;
-	private final int FIRE_NOW = 0;
-
 	public Launcher(String id, City gaza, boolean hiddenLauncher, List<Missile> missiles) {
 		super(id, missiles, gaza, hiddenLauncher);
 	}
